@@ -179,14 +179,16 @@ summary(lrqap_flo)
 ######## TASK ########  
 
 ### Now, let's say our measure of political power relationship is not very interesting.
-### What if we want to understand the political power as the potential number of seats
-### seats in the council the families would have if they were connected. Calculate 
-### a new dyadic matrix with the *sum* of priorates (instead of the difference).
+### What if we want to understand the political power from a homophily perspective,
+### i.e., if two families are very powerful, they might be more likely to form ties.
+### Usually, for this approach, we use the *product* of the attributes we want to analyse.
+### Calculate a dyadic matrix multiplying the number of priorates (instead of the difference).
 ### Also, there is another nodal attribute in the datasets, 'totalties ', which
-### refers to the total number of marriage and business connections each family 
+### refers to the total number of marriages and business connections each family 
 ### has with a wider number of families in Florence (including many more than the
-### ones in the main dataset). With these new variables, run the required analysis
-### to predict the emergence of marriage ties. 
+### ones in the main dataset). With these new variables --the product of priorates and
+### difference in total ties-- run the most adequate analysis to predict the emergence 
+### of *marriage ties*. Also, use the business network as a predictor.
 
 
 
