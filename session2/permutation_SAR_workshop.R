@@ -1,5 +1,6 @@
 ######## LISS2108 Statistical Inference for Social Networks Analysis ##########
-#
+# Author: Santiago Quintero (KCL) - 2025
+
 # In this workshop, we'll use the class's running examples and will run 
 # permutation tests and autoregressive models and will compare them to
 # running standard regressions. We'll create our own data to keep track of how 
