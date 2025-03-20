@@ -28,6 +28,7 @@ packages <- c("tidyr", "lmPerm", "igraph", "spdep", "Matrix",
 # If the packages are not installed, run:
 # install.packages(packages)
 
+
 # Call the libraries
 lapply(packages, require, character.only = TRUE)
 
@@ -49,9 +50,10 @@ lapply(packages, require, character.only = TRUE)
 # Let's generate our synthetic data
 n_classrooms <- 20 # Number of classrooms
 centralisation <- sample(0:15, n_classrooms, replace = TRUE) # Centralisation measure
-error <- rt(n_classrooms, df = 20) * 50 #  effect with error term following a heavy tailed distribution
+error <- rt(n_classrooms, df = 20) * 50 #  effect with error term following a tailed distribution
 smoking_reduction <- 5 + 4 * centralisation + error 
 
+plot(error)
 
 classroom_data <- data.frame(
   Classroom = 1:n_classrooms,
@@ -197,12 +199,12 @@ plot(trade,
 dev.off()
 
 # Convert to adjacency matrix - We'll use it to calculate our weighting matrix
-W <- as.matrix(as_adj(trade))
+W <- as.matrix(as_adjacency_matrix(trade))
 diag(W) <- 0  # Remove self-loops; In this case, we only care about *international* trade
 
 
 ## Let's take a look at the adjacency matrix
-print(W)
+View(W)
 
 
 # To calculate the degree of each node (the number of trading partners),
@@ -296,8 +298,7 @@ summary(sar_trade)
 # Plot residuals to check normality
 ggplot(data.frame(Residuals = residuals(sar_trade)), aes(x = Residuals)) +
   geom_density() +
-  labs(title = "Residual Distribution of Standard Linear Regression",
-       subtitle = "Heavy-tailed residuals violate normality assumption")
+  labs(title = "Residual Distribution of SAR model")
 
 # And fitted vs residuals
 ggplot(data.frame(Fitted = fitted(sar_trade), Residuals = residuals(sar_trade)), 
@@ -321,6 +322,7 @@ abline(0, 1, col = "darkred")
 ### Why? 
 ### Could we identify the spatial dependence? Value for Rho
 ### Does this model offer a better fit? Compare the AIC values (lower is better)
+
 
 
 
