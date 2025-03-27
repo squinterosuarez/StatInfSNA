@@ -2,7 +2,7 @@
 # Author: Santiago Quintero (KCL) - 2025
 
 # In this workshop, we'll work with the "General Relativity and Quantum Cosmology 
-# collaboration network" collected by Leskovec at al (2007) (http://doi.acm.org/10.1145/1217299.1217301).
+# collaboration network" collected by Leskovec et al (2007) (http://doi.acm.org/10.1145/1217299.1217301).
 # This network contains all academic collaborations in the domain of GR&QC between
 # 1993-2003. It is an undirected network that connects nodes (authors) if they 
 # wrote a paper together. We'll practice fitting ERGMs with this network.
@@ -42,7 +42,7 @@ collab_small <- sample_n(collab, 1000)
 
 
 
-# Create igraph object object
+# Create igraph object
 net.igraph <- graph_from_edgelist(as.matrix(collab_small),
                            directed = FALSE)
 
@@ -53,9 +53,9 @@ net.igraph <- delete_vertices(net.igraph, V(net.igraph)[degree(net.igraph) < 3])
 net.igraph <- delete_vertices(net.igraph, V(net.igraph)[degree(net.igraph) == 0])
 
 ## The dataset does not have node-level attributes, so let's create one
-## randomly to use as a variable later. Let's assume that we add a values for
+## randomly to use as a variable later. Let's assume that we add values for
 ## the prestige of the university each author is in. And let's assume that that
-## values is correlated with the degree centrality of the author
+## value is correlated with the degree centrality of the author
 
 degree_centrality <- degree(net.igraph) # centrality
 random_variable <- rnorm(vcount(net.igraph), mean = 5, sd = 2) # add some noice
@@ -81,22 +81,22 @@ plot(net.igraph,
 ## Transform the Igraph object into a Network object to run the ERGMs
 net <- asNetwork(net.igraph)
 
-detach(package:igraph) # sometimes the Network and Igraph packages clash, so better keep them separate
+detach(package:igraph) # sometimes the Network and Igraph packages clash, so better to keep them separate
 
 
 
 ##### Fitiing ERGMs ######
 
-## First we fit the simplest model possible: only considering the number of ties
+## First, we fit the simplest model possible: only considering the number of ties
 ergm.base <- ergm(net ~ edges)  # Number of edges in the network (equal to
                                 # the intercept term in a regression)
 summary(ergm.base)  
 
 
-## Now let's try to directly model the structural properties of the network.
-## From the literature, we supspect that some important social forces
+## Now let's try to model the structural properties of the network directly.
+## From the literature, we suspect that some important social forces
 ## behind academic collaboration have to do with popularity (more prolific)
-## academics might collaborate more and with tiradic closure (it is more
+## academics might collaborate more and with triadic closure (it is more
 ## likely to collaborate with collaborators of my collaborators). We first
 ## model these network dependencies using an "old" approach.
 
@@ -111,7 +111,7 @@ summary(ergm.simple)
 
 
 ## Now, let's model these dependencies with a more "contemporary" approach
-## to calculating these dependencies.
+## to calculate these dependencies.
 ergm.structure <- ergm(net ~ 
                     edges +                         
                     gwesp(0.5, fixed = TRUE) +      # Geometrically weighted edgewise shared partner distribution
@@ -136,7 +136,7 @@ OR.ergm.node.att <- exp(coef(ergm.node.att))
 print(OR.ergm.node.att)
 
 
-## We can go even more sophisticated. What if authors prefer to collabroate with
+## We can go even more sophisticated. What if authors prefer to collaborate with
 ## people in equally good institutions (i.e., prestige is similar)
 ergm.node.att.diff <- ergm(net ~ 
                         edges +                         
@@ -173,7 +173,7 @@ gof_simple <- gof(ergm.simple)
 plot(gof_simple)
 
 
-## MCMC diagnostics and GOF for the more sophistecated model
+## MCMC diagnostics and GOF for the more sophisticated model
 mcmc.diagnostics(ergm.structure)
 gof_structure <- gof(ergm.structure)
 plot(gof_structure)
