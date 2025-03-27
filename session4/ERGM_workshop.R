@@ -210,4 +210,36 @@ plot(gof_node.att.d2)
 
 ## How do we select the best model? AIC, BIC?
 
+###### TASK ######
+## Now, you will run your own ERGMs using the Florentine network we worked
+## with last class.
+data(florentine) 
+
+## Remeber there are two networks in this dataset 
+print(flomarriage) ## The marriage network and 
+plot(flomarriage,
+     displaylabels = TRUE,    
+     label.pos = 5,           
+     label.cex = 0.8,         
+     vertex.cex = flomarriage %v% "wealth"/15,  # Node size by wealth
+     vertex.col = "gold",     
+     edge.col = "gray20",     
+     main = "Florentine Marriages Network - Node size by wealth")
+
+
+print(flobusiness) ## The business network
+plot(flobusiness,
+     displaylabels = TRUE,    
+     label.pos = 5,           
+     label.cex = 0.8,         
+     vertex.cex = flomarriage %v% "wealth"/15,  
+     vertex.col = "pink",     
+     edge.col = "gray20",     
+     main = "Florentine Business Network - Node size by wealth")
+
+## The networks are already set to run ERGMs. How would you model these networks?
+## What parameters would you include? 
+## Spend some time looking at the possibilities here: https://zalmquist.github.io/ERGM_Lab/ergm-terms.html
+
+
 
